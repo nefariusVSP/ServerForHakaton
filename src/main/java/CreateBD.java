@@ -23,8 +23,7 @@ public class CreateBD {
                 "  `midName` VARCHAR(20) NOT NULL,\n" +
                 "  `serialPassport` VARCHAR(4) NOT NULL,\n" +
                 "  `namberPassport` VARCHAR(6) NOT NULL,\n" +
-                "  `id` INT NOT NULL AUTO_INCREMENT,\n" +
-                "  PRIMARY KEY (`id`));\n";
+                "  PRIMARY KEY (`serialPassport`, `namberPassport`));\n";
 
         try (Connection connection = DriverManager.getConnection(Programm.URL,Programm.USERNAME,Programm.PUSSWORD); Statement statement = connection.createStatement()) {
 

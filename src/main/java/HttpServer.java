@@ -4,11 +4,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.util.ArrayList;
 
 public class HttpServer {
 
     public static void mainHTTP() throws Throwable {
-        ServerSocket ss = new ServerSocket(8080);
+        ServerSocket ss = new ServerSocket(8087);
         while (true) {
             Socket s = ss.accept();
             System.err.println("Client accepted");
@@ -34,7 +35,7 @@ public class HttpServer {
 
                 writeResponse("<html><body><h1>Hello from Habrahabr</h1></body></html>");
             } catch (Throwable t) {
-                /*do nothing*/
+                System.err.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             } finally {
                 try {
                     s.close();
@@ -57,9 +58,28 @@ public class HttpServer {
         }
 
         private void readInputHeaders() throws Throwable {
+
+
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            ArrayList<String> st = new ArrayList<String>();
+
+            boolean t = false;
+            boolean er = true;
             while(true) {
                 String s = br.readLine();
+                if (er)
+                    if (s.equals("ERROR: ")){
+                        er = false;
+                        Action.Actions(st);
+                    }
+                    if (t == false){
+                        t = true;
+                    }
+                    else {
+                        if (s.length() -2 > 1)
+                        st.add( s.substring(0,s.length()-2));
+
+                    }
                 System.err.println(s);
                 if(s == null || s.trim().length() == 0) {
                     break;

@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 
 public class HttpServer {
-
+    static public String message;
     public static void mainHTTP() throws Throwable {
         ServerSocket ss = new ServerSocket(8087);
         while (true) {
@@ -33,7 +33,7 @@ public class HttpServer {
             try {
                 readInputHeaders();
 
-                writeResponse("<html><body><h1>OK</h1></body></html>");
+                writeResponse(message);
             } catch (Throwable t) {
                 System.err.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             } finally {

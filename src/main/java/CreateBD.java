@@ -13,6 +13,7 @@ import java.util.List;
 public class CreateBD {
     // служит для заполнения бд таблицами улиц, принемает путь к файлу txt, и префикс района
     static public void CreateStritTable (String path, String preficsNameTable) throws IOException {
+        String ful = "";
         String zap1 = "CREATE TABLE `spb`.`";
         String zap2 = "` (\n" +
                 "  `home` VARCHAR(4) NOT NULL,\n" +
@@ -32,8 +33,10 @@ public class CreateBD {
             int i = 1;
             for (String line : lines) {
                 statement.execute(zap1 + preficsNameTable + i + zap2);
+                //ful += zap1 + preficsNameTable + i + zap2;
                 i += 1;
             }
+            System.err.println("");
         } catch (SQLException e) {
             e.printStackTrace();
         }

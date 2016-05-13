@@ -42,6 +42,10 @@ public class Action {
                 }
                 Advert(valueA, value.get(count - 1));
                 break;
+            case "Check": //
+                String seria = value.get(1);
+                String noemr = value.get(2);
+                Check(seria, noemr);
         }
     }
     static String[] Registration(String[] value){
@@ -131,4 +135,17 @@ public class Action {
         }
     }
 
+    static void Check (String serial, String namber){
+        try (Connection connection = DriverManager.getConnection(Programm.URL,Programm.USERNAME,Programm.PUSSWORD); Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM `message` WHERE `serialPassport`= \"" + serial + "\" and `namberPassport` = \"" + namber + "\";");
+            HttpServer.message = "";
+            while (resultSet.next()){
+                String message = resultSet.getString("message") + " " + resultSet.getString("date");
+                HttpServer.message +=message;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

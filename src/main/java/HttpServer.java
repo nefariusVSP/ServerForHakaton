@@ -33,7 +33,7 @@ public class HttpServer {
             try {
                 readInputHeaders();
 
-                writeResponse("<html><body><h1>Hello from Habrahabr</h1></body></html>");
+                writeResponse("<html><body><h1>OK</h1></body></html>");
             } catch (Throwable t) {
                 System.err.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             } finally {
@@ -76,7 +76,7 @@ public class HttpServer {
                         t = true;
                     }
                     else {
-                        if (s.length() -2 > 1)
+                        if (s.length() -2 > 0)
                         st.add( s.substring(0,s.length()-2));
 
                     }

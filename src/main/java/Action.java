@@ -87,9 +87,46 @@ public class Action {
                 }
                 break;
             case 3:
-                
+                try (Connection connection = DriverManager.getConnection(Programm.URL,Programm.USERNAME,Programm.PUSSWORD); Statement statement = connection.createStatement()) {
+
+                    resultSet = statement.executeQuery("SELECT * FROM `" + value[1] + value[2] + "`");
+                    SimpleDateFormat sec = new SimpleDateFormat("dd.MM.yyyy");
+                    String date = sec.format(new java.util.Date());
+                    ArrayList<String> seria = new ArrayList<String>();
+                    ArrayList<String> nomber = new ArrayList<String>();
+                    while (resultSet.next()) {
+                        seria.add(resultSet.getString("serialPassport"));
+                        nomber.add(resultSet.getString("namberPassport"));
+                    }
+                    for (int j = 0; j < seria.size(); ++j) {
+                        String SQL = "INSERT INTO `message` (`serialPassport`,`namberPassport`,`message`,`date`) VALUE ( \"" +
+                                seria.get(j) + "\",\"" + nomber.get(j) + "\",\"" + message + "\",\"" + date + "\" );";
+                        statement.execute(SQL);
+                    }
+                }
+                catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 4:
+                try (Connection connection = DriverManager.getConnection(Programm.URL,Programm.USERNAME,Programm.PUSSWORD); Statement statement = connection.createStatement()) {
+                    String home = value[3].substring(0,value[3].indexOf('/'));
+                    String shome = value[3].substring(value[3].indexOf('/')+1 , value[3].length());
+
+                    resultSet = statement.executeQuery("SELECT * FROM `" + value[1] + value[2] + "` WHERE `home` = \"" + home + "\" and `housing` = \"" + shome + "\"");
+                    SimpleDateFormat sec = new SimpleDateFormat("dd.MM.yyyy");
+                    String date = sec.format(new java.util.Date());
+                    while (resultSet.next()){
+
+                        String SQL = "INSERT INTO `message` (`serialPassport`,`namberPassport`,`message`,`date`) VALUE ( \"" +
+                                resultSet.getString("serialPassport") + "\",\"" + resultSet.getString("namberPassport") + "\",\"" + message + "\",\"" + date + "\" );";
+                        statement.execute(SQL);
+                    }
+
+                }
+                catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }

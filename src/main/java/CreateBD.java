@@ -14,7 +14,7 @@ public class CreateBD {
     // служит для заполнения бд таблицами улиц, принемает путь к файлу txt, и префикс района
     static public void CreateStritTable (String path, String preficsNameTable) throws IOException {
         String ful = "";
-        String zap1 = "CREATE TABLE `spb`.`";
+       /* String zap1 = "CREATE TABLE `spb`.`";
         String zap2 = "` (\n" +
                 "  `home` VARCHAR(4) NOT NULL,\n" +
                 "  `housing` VARCHAR(4) NOT NULL,\n" +
@@ -24,7 +24,18 @@ public class CreateBD {
                 "  `midName` VARCHAR(20) NOT NULL,\n" +
                 "  `serialPassport` VARCHAR(4) NOT NULL,\n" +
                 "  `namberPassport` VARCHAR(6) NOT NULL,\n" +
-                "  PRIMARY KEY (`serialPassport`, `namberPassport`));\n";
+                "  PRIMARY KEY (`serialPassport`, `namberPassport`));\n";*/
+        String zap1 = "CREATE TABLE ";
+        String zap2 = " (" +
+                "  \"home\" VARCHAR(4) NOT NULL," +
+                "  \"housing\" VARCHAR(4) NOT NULL," +
+                "  \"flat\" VARCHAR(4) NOT NULL," +
+                "  \"lastName\" VARCHAR(20) NOT NULL," +
+                "  \"fistName\" VARCHAR(20) NOT NULL," +
+                "  \"midName\" VARCHAR(20) NOT NULL," +
+                "  \"serialPassport\" VARCHAR(4) NOT NULL," +
+                "  \"namberPassport\" VARCHAR(6) NOT NULL," +
+                "  PRIMARY KEY (\"serialPassport\", \"namberPassport\"));";
 
         try (Connection connection = DriverManager.getConnection(Programm.URL,Programm.USERNAME,Programm.PUSSWORD); Statement statement = connection.createStatement()) {
 
@@ -32,8 +43,8 @@ public class CreateBD {
             System.err.println(connection.isClosed());
             int i = 1;
             for (String line : lines) {
-                statement.execute(zap1 + preficsNameTable + i + zap2);
-                //ful += zap1 + preficsNameTable + i + zap2;
+                ///statement.execute(zap1 + preficsNameTable + i + zap2);
+                ful += zap1 + preficsNameTable + i + zap2;
                 i += 1;
             }
             System.err.println("");

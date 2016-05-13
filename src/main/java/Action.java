@@ -46,6 +46,10 @@ public class Action {
                 String seria = value.get(1);
                 String noemr = value.get(2);
                 Check(seria, noemr);
+                break;
+            case "Information":
+                Information(value.get(1),value.get(2));
+                break;
         }
     }
     static String[] Registration(String[] value){
@@ -55,9 +59,11 @@ public class Action {
 
         return new String[0];
     }
+
     static void Bid(String[] value){
 
     }
+
     static void Advert(String[] value, String message){
         //Тут должны приходить 1 район, 2 улица, 3 дом
         ResultSet resultSet;
@@ -143,6 +149,15 @@ public class Action {
                 String message = resultSet.getString("message") + " " + resultSet.getString("date");
                 HttpServer.message +=message;
             }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void Information (String area, String message){
+        try (Connection connection = DriverManager.getConnection(Programm.URL,Programm.USERNAME,Programm.PUSSWORD); Statement statement = connection.createStatement()) {
+            statement.execute("UPDATE `area` SET `information` =\"" + message +"\" WHERE `id` = \"" + area +"\";" );
         }
         catch (SQLException e) {
             e.printStackTrace();

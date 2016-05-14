@@ -11,9 +11,9 @@ import static jdk.nashorn.internal.objects.NativeMath.log;
  */
 public class Client {
 
-    public static void main(String[] args) throws IOException {
+   /* public static void main(String[] args) throws IOException {
         System.err.println(ck());
-    }
+    }*/
     public static String ck () {
         String resultJson = "";
         try{

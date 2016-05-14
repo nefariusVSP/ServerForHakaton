@@ -35,6 +35,8 @@ public class HttpServer {
                 readInputHeaders();
 
                 writeResponse(message);
+                System.err.println(message);
+                message = "";
             } catch (Throwable t) {
                 System.err.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             } finally {
@@ -59,66 +61,68 @@ public class HttpServer {
         }
 
         private void readInputHeaders() throws Throwable {
-
-
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             ArrayList<String> st = new ArrayList<String>();
 
 
             while (true) {
                 String s = br.readLine();
-                //TODO похоже тут надо сделать проверку на наличие 13 символов
-                if (s.substring(0, 13).equals("Content-Type:")) {
+                if (s.length() > 13) {
+                    if (s.substring(0, 13).equals("Content-Type:")) {
 
-                    if (s.charAt(14) == '*') {
-                        st.add(" ");
-                        s = s.substring(s.indexOf('*')+1, s.length());
-                        int i = 0;
-                        String ss = s;
-                        while (true){
-                            if (ss.indexOf('*') != -1){
-                                ss = ss.substring(ss.indexOf('*')+1,ss.length());
-                                i++;
+                        if (s.charAt(14) == '*') {
+                            st.add(" ");
+                            s = s.substring(s.indexOf('*') + 1, s.length());
+                            int i = 0;
+                            String ss = s;
+                            while (true) {
+                                if (ss.indexOf('*') != -1) {
+                                    ss = ss.substring(ss.indexOf('*') + 1, ss.length());
+                                    i++;
+                                } else {
+                                    break;
+                                }
                             }
-                            else {
-                                break;
-                            }
-                        }
 
-                        if (i == 3) {
-                            String area = s.substring(0,3);
-                            s = s.substring(4,s.length());
-                            String street = s.substring(0,s.indexOf('*'));
-                            s = s.substring(s.indexOf('*') + 1, s.length());
-                            String house = s.substring(0,s.indexOf('*'));
-                            s = s.substring(s.indexOf('*') + 1, s.length());
-                            String[] mas = {"",area,street,house};
-                            Action.Advert(mas,s);
+                            if (i == 3) {
+                                String area = s.substring(0, 3);
+                                s = s.substring(4, s.length());
+                                String street = s.substring(0, s.indexOf('*'));
+                                s = s.substring(s.indexOf('*') + 1, s.length());
+                                String house = s.substring(0, s.indexOf('*'));
+                                s = s.substring(s.indexOf('*') + 1, s.length());
+                                String[] mas = {"", area, street, house};
+                                Action.Advert(mas, s);
+                            } else if (i == 2) {
+                                String area = s.substring(0, 3);
+                                s = s.substring(4, s.length());
+                                String street = s.substring(0, s.indexOf('*'));
+                                s = s.substring(s.indexOf('*') + 1, s.length());
+                                String[] mas = {"", area, street};
+                                Action.Advert(mas, s);
+                            } else {
+                                String area = s.substring(0, 3);
+                                s = s.substring(4, s.length());
+                                String[] mas = {"", area};
+                                Action.Advert(mas, s);
+                            }
+                            break;
                         }
-                        else if (i == 2) {
-                            String area = s.substring(0,3);
-                            s = s.substring(4,s.length());
-                            String street = s.substring(0,s.indexOf('*'));
-                            s = s.substring(s.indexOf('*') + 1, s.length());
-                            String[] mas = {"",area,street};
-                            Action.Advert(mas,s);
-                        }
-                        else {
-                            String area = s.substring(0,3);
-                            s = s.substring(4,s.length());
-                            String[] mas = {"",area};
-                            Action.Advert(mas,s);
+                        else if (s.charAt(14) == '|'){
+                            message = Action.Iystal();
+                            break;
+
+                        }else {
+                            String area = s.substring(14, s.length()).substring(0, 3);
+                            String message = s.substring(17, s.length());
+                            Action.Information(area, message);
+                            break;
                         }
                     }
-                    else {
-                        String area = s.substring(14, s.length()).substring(0, 3);
-                        String message = s.substring(17, s.length());
-                        Action.Information(area, message);
+                    //System.err.println(s);
+                    if (s == null || s.trim().length() == 0) {
+                        break;
                     }
-                }
-                //System.err.println(s);
-                if (s == null || s.trim().length() == 0) {
-                    break;
                 }
             }
         }

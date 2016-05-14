@@ -1,8 +1,6 @@
-import sun.util.resources.CalendarData;
-
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Action {
 
@@ -162,5 +160,21 @@ public class Action {
         catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    static public String  Iystal (){
+        ResultSet resultSet;
+        String result ="";
+        try (Connection connection = DriverManager.getConnection(Programm.URL,Programm.USERNAME,Programm.PUSSWORD); Statement statement = connection.createStatement()) {
+            resultSet = statement.executeQuery("SELECT * FROM `zapros`");
+            while (resultSet.next()){
+                result+= resultSet.getString("idarea") + "*" + resultSet.getString("idstreet") + "*" + resultSet.getString("house") + "*" + resultSet.getString("housing") + "*" + resultSet.getString("flat") + "*" + resultSet.getString("message") + "*";
+            }
+            resultSet.next();
+        }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        return result;
     }
 }

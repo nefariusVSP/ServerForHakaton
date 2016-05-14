@@ -4,33 +4,28 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static jdk.nashorn.internal.objects.NativeMath.log;
-
 /**
  * Created by Sergei on 13.05.2016.
  */
 public class Client {
 
-   /* public static void main(String[] args) throws IOException {
+   public static void main(String[] args) throws IOException {
         System.err.println(ck());
-    }*/
+    }
     public static String ck () {
         String resultJson = "";
         try{
-            URL url = new URL("http://172.16.60.63:8087/");
+            URL url = new URL("http://25.47.73.73:8087/");
             String query = "12345";
             HttpURLConnection urlConnection;
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
+            urlConnection.setRequestMethod("POST");
             //urlConnection.setRequestProperty("Advert", "");
             //urlConnection.setRequestProperty("nev", "");
             //urlConnection.setRequestProperty("1", "");
-            //urlConnection.setRequestProperty("787/5", "");
-            urlConnection.setRequestProperty("Check", "");
-            urlConnection.setRequestProperty("1234", "");
-            urlConnection.setRequestProperty("123457", "");
+            urlConnection.setRequestProperty("787/5", "");
+            urlConnection.setRequestProperty("Content-Type", "|");
             //urlConnection.setRequestProperty("Не бует горячей воды", "");
-            urlConnection.setRequestProperty("ERROR", "");
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
             urlConnection.connect();
@@ -49,7 +44,7 @@ public class Client {
             }
 
             resultJson = buffer.toString();
-            log("json", resultJson);
+            System.err.println(resultJson);
         }
         catch (Exception e)
         {
